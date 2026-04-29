@@ -1,0 +1,854 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Registro | LuxeStay Hotels</title>
+  <style>
+    /* ── Reset & base ──────────────────────────────────────────────────── */
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --gold:        #c9a84c;
+      --gold-light:  #e8c97a;
+      --gold-dark:   #a07830;
+      --navy:        #0f1e3c;
+      --navy-mid:    #1a3260;
+      --navy-light:  #223d6e;
+      --cream:       #fdf8f0;
+      --cream-dark:  #f5ede0;
+      --text-dark:   #1a1a2e;
+      --text-mid:    #4b5563;
+      --text-light:  #9ca3af;
+      --success:     #059669;
+      --error:       #dc2626;
+      --radius:      12px;
+    }
+
+    html, body {
+      height: 100%;
+      font-family: 'Segoe UI', Georgia, 'Times New Roman', serif;
+    }
+
+    body {
+      background: var(--cream);
+      display: flex;
+      align-items: stretch;
+      min-height: 100vh;
+    }
+
+    /* ── Layout wrapper ────────────────────────────────────────────────── */
+    .page-wrapper {
+      display: flex;
+      width: 100%;
+      min-height: 100vh;
+    }
+
+    /* ── LEFT PANEL ────────────────────────────────────────────────────── */
+    .hero-panel {
+      flex: 1 1 0;
+      background:
+        linear-gradient(160deg, rgba(15,30,60,0.82) 0%, rgba(10,20,45,0.92) 100%),
+        url('https://images.unsplash.com/photo-1566073771259-6a8506099945?w=1200&q=80') center/cover no-repeat;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 48px 44px;
+      position: relative;
+      overflow: hidden;
+      min-height: 100vh;
+    }
+
+    /* decorative circle */
+    .hero-panel::before {
+      content: '';
+      position: absolute;
+      width: 420px; height: 420px;
+      border-radius: 50%;
+      border: 1px solid rgba(201,168,76,0.18);
+      top: -80px; right: -80px;
+    }
+    .hero-panel::after {
+      content: '';
+      position: absolute;
+      width: 280px; height: 280px;
+      border-radius: 50%;
+      border: 1px solid rgba(201,168,76,0.12);
+      bottom: 60px; left: -60px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      z-index: 1;
+    }
+
+    .brand-icon {
+      width: 44px; height: 44px;
+      background: var(--gold);
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .brand-icon svg { width: 26px; height: 26px; fill: white; }
+
+    .brand-name {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: 0.5px;
+    }
+
+    .brand-name span { color: var(--gold); }
+
+    .hero-content { z-index: 1; }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      background: rgba(201,168,76,0.15);
+      border: 1px solid rgba(201,168,76,0.4);
+      color: var(--gold-light);
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 6px 14px;
+      border-radius: 50px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 22px;
+    }
+
+    .hero-badge svg { width: 14px; height: 14px; fill: var(--gold-light); }
+
+    .hero-content h2 {
+      font-size: clamp(1.8rem, 3vw, 2.6rem);
+      font-weight: 800;
+      color: #fff;
+      line-height: 1.2;
+      margin-bottom: 16px;
+    }
+
+    .hero-content h2 span { color: var(--gold); }
+
+    .hero-content p {
+      color: rgba(255,255,255,0.70);
+      font-size: 0.975rem;
+      line-height: 1.65;
+      max-width: 360px;
+      margin-bottom: 36px;
+    }
+
+    .benefits {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .benefit {
+      display: flex;
+      align-items: flex-start;
+      gap: 13px;
+    }
+
+    .benefit-icon {
+      width: 36px; height: 36px;
+      background: rgba(201,168,76,0.15);
+      border: 1px solid rgba(201,168,76,0.3);
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .benefit-icon svg { width: 18px; height: 18px; fill: var(--gold); }
+
+    .benefit-text strong {
+      display: block;
+      color: #fff;
+      font-size: 0.875rem;
+      font-weight: 600;
+      margin-bottom: 2px;
+    }
+
+    .benefit-text span {
+      color: rgba(255,255,255,0.55);
+      font-size: 0.8rem;
+    }
+
+    .hero-footer {
+      z-index: 1;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      padding-top: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .star-rating {
+      display: flex;
+      gap: 3px;
+    }
+
+    .star-rating svg { width: 16px; height: 16px; fill: var(--gold); }
+
+    .hero-footer p {
+      color: rgba(255,255,255,0.5);
+      font-size: 0.78rem;
+    }
+
+    /* ── RIGHT PANEL (form) ────────────────────────────────────────────── */
+    .form-panel {
+      width: 480px;
+      flex-shrink: 0;
+      background: #fff;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 52px 48px;
+      overflow-y: auto;
+    }
+
+    /* ── Form header ───────────────────────────────────────────────────── */
+    .form-header {
+      margin-bottom: 32px;
+    }
+
+    .form-header .step-tag {
+      display: inline-block;
+      background: var(--cream-dark);
+      color: var(--gold-dark);
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      padding: 4px 12px;
+      border-radius: 50px;
+      margin-bottom: 14px;
+    }
+
+    .form-header h1 {
+      font-size: 1.65rem;
+      font-weight: 800;
+      color: var(--text-dark);
+      margin-bottom: 8px;
+      line-height: 1.25;
+    }
+
+    .form-header p {
+      color: var(--text-mid);
+      font-size: 0.9rem;
+      line-height: 1.55;
+    }
+
+    /* ── Divider ───────────────────────────────────────────────────────── */
+    .divider {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 26px;
+    }
+    .divider::before, .divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: #e5e7eb;
+    }
+    .divider span {
+      font-size: 0.75rem;
+      color: var(--text-light);
+      white-space: nowrap;
+    }
+
+    /* ── Alert box ─────────────────────────────────────────────────────── */
+    #alert-box {
+      display: none;
+      border-radius: var(--radius);
+      padding: 12px 16px;
+      margin-bottom: 20px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      align-items: flex-start;
+      gap: 10px;
+      line-height: 1.4;
+    }
+    #alert-box.show         { display: flex; }
+    #alert-box.alert-error  { background: #fef2f2; color: #b91c1c; border: 1px solid #fca5a5; }
+    #alert-box.alert-success{ background: #f0fdf4; color: #166534; border: 1px solid #86efac; }
+    #alert-box svg          { width: 18px; height: 18px; flex-shrink: 0; margin-top: 1px; }
+
+    /* ── Form groups ───────────────────────────────────────────────────── */
+    .form-group { margin-bottom: 18px; }
+
+    label {
+      display: block;
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--text-dark);
+      margin-bottom: 6px;
+      letter-spacing: 0.2px;
+    }
+
+    .input-wrapper { position: relative; }
+
+    .input-icon {
+      position: absolute;
+      left: 14px; top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-light);
+      display: flex; align-items: center;
+      pointer-events: none;
+    }
+    .input-icon svg { width: 17px; height: 17px; }
+
+    input {
+      width: 100%;
+      padding: 11px 14px 11px 42px;
+      border: 1.5px solid #e5e7eb;
+      border-radius: var(--radius);
+      font-size: 0.9rem;
+      color: var(--text-dark);
+      background: var(--cream);
+      transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
+      outline: none;
+      font-family: inherit;
+    }
+
+    input:focus {
+      border-color: var(--gold);
+      background: #fff;
+      box-shadow: 0 0 0 3px rgba(201,168,76,0.14);
+    }
+
+    input.error {
+      border-color: var(--error);
+      background: #fff5f5;
+    }
+    input.error:focus {
+      box-shadow: 0 0 0 3px rgba(220,38,38,0.1);
+    }
+
+    input.success {
+      border-color: var(--success);
+      background: #f0fdf4;
+    }
+
+    .toggle-password {
+      position: absolute;
+      right: 13px; top: 50%;
+      transform: translateY(-50%);
+      background: none; border: none;
+      cursor: pointer; color: var(--text-light);
+      display: flex; align-items: center; padding: 0;
+      transition: color 0.2s;
+    }
+    .toggle-password:hover { color: var(--gold-dark); }
+    .toggle-password svg   { width: 17px; height: 17px; }
+
+    /* ── Error messages ────────────────────────────────────────────────── */
+    .error-messages { margin-top: 7px; display: flex; flex-direction: column; gap: 4px; }
+
+    .error-msg {
+      display: flex; align-items: flex-start; gap: 6px;
+      font-size: 0.78rem; color: var(--error); font-weight: 500;
+      line-height: 1.35;
+    }
+    .error-msg svg { width: 13px; height: 13px; flex-shrink: 0; margin-top: 1px; }
+
+    /* ── Password strength ─────────────────────────────────────────────── */
+    .password-strength { margin-top: 9px; }
+
+    .strength-bars { display: flex; gap: 4px; margin-bottom: 5px; }
+
+    .bar {
+      flex: 1; height: 3px; border-radius: 4px;
+      background: #e5e7eb; transition: background 0.3s;
+    }
+    .bar.active-weak   { background: #ef4444; }
+    .bar.active-fair   { background: #f59e0b; }
+    .bar.active-good   { background: #3b82f6; }
+    .bar.active-strong { background: var(--success); }
+
+    .strength-label { font-size: 0.75rem; color: var(--text-light); font-weight: 500; }
+
+    /* ── Submit button ─────────────────────────────────────────────────── */
+    .btn-register {
+      width: 100%;
+      padding: 13px;
+      background: linear-gradient(135deg, var(--gold-dark), var(--gold));
+      color: #fff;
+      border: none; border-radius: var(--radius);
+      font-size: 0.95rem; font-weight: 700;
+      cursor: pointer; margin-top: 10px;
+      transition: opacity 0.2s, transform 0.1s, box-shadow 0.2s;
+      letter-spacing: 0.5px;
+      box-shadow: 0 4px 16px rgba(160,120,48,0.35);
+      font-family: inherit;
+    }
+    .btn-register:hover  { opacity: 0.9; box-shadow: 0 6px 22px rgba(160,120,48,0.45); }
+    .btn-register:active { transform: scale(0.98); }
+    .btn-register:disabled { opacity: 0.55; cursor: not-allowed; transform: none; }
+
+    /* ── Footer text ───────────────────────────────────────────────────── */
+    .footer-text {
+      text-align: center;
+      margin-top: 22px;
+      font-size: 0.85rem;
+      color: var(--text-mid);
+    }
+    .footer-text a { color: var(--gold-dark); text-decoration: none; font-weight: 700; }
+    .footer-text a:hover { text-decoration: underline; }
+
+    .terms-text {
+      text-align: center;
+      margin-top: 14px;
+      font-size: 0.75rem;
+      color: var(--text-light);
+      line-height: 1.5;
+    }
+    .terms-text a { color: var(--text-mid); text-decoration: underline; }
+
+    /* ── RESPONSIVE ────────────────────────────────────────────────────── */
+
+    /* Tablet: hide hero panel, center form */
+    @media (max-width: 900px) {
+      .hero-panel { display: none; }
+      .form-panel {
+        width: 100%;
+        padding: 40px 36px;
+        justify-content: flex-start;
+        padding-top: 52px;
+      }
+      /* Show brand header on small screens */
+      .mobile-brand {
+        display: flex !important;
+      }
+    }
+
+    /* Mobile */
+    @media (max-width: 520px) {
+      .form-panel {
+        padding: 32px 22px 40px;
+      }
+      .form-header h1 { font-size: 1.4rem; }
+    }
+
+    /* Mobile brand bar (hidden on desktop) */
+    .mobile-brand {
+      display: none;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 28px;
+      padding-bottom: 24px;
+      border-bottom: 1px solid #e5e7eb;
+    }
+
+    .mobile-brand .brand-icon {
+      width: 38px; height: 38px;
+    }
+    .mobile-brand .brand-icon svg { width: 22px; height: 22px; }
+
+    .mobile-brand .brand-name {
+      font-size: 1.1rem;
+      color: var(--text-dark);
+    }
+    .mobile-brand .brand-name span { color: var(--gold-dark); }
+
+    /* Very small screens */
+    @media (max-width: 360px) {
+      .form-panel { padding: 24px 16px 36px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="page-wrapper">
+
+  <!-- ── LEFT: Hero panel ─────────────────────────────────────────────── -->
+  <div class="hero-panel">
+    <!-- Brand -->
+    <div class="brand">
+      <div class="brand-icon">
+        <svg viewBox="0 0 24 24"><path d="M7 13c1.66 0 3-1.34 3-3S8.66 7 7 7s-3 1.34-3 3 1.34 3 3 3zm12-6h-8v7H3V5H1v15h2v-3h18v3h2v-9c0-2.21-1.79-4-4-4z"/></svg>
+      </div>
+      <span class="brand-name">Luxe<span>Stay</span> Hotels</span>
+    </div>
+
+    <!-- Main content -->
+    <div class="hero-content">
+      <div class="hero-badge">
+        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        Programa de Huéspedes Selectos
+      </div>
+      <h2>Reserva tu<br/><span>experiencia perfecta</span></h2>
+      <p>
+        Únete a LuxeStay Hotels y accede a tarifas exclusivas, upgrades de habitación y beneficios premium en más de 80 propiedades de lujo alrededor del mundo.
+      </p>
+      <div class="benefits">
+        <div class="benefit">
+          <div class="benefit-icon">
+            <svg viewBox="0 0 24 24"><path d="M17 12h-5v5h5v-5zM16 1v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2h-1V1h-2zm3 18H5V8h14v11z"/></svg>
+          </div>
+          <div class="benefit-text">
+            <strong>Reservas prioritarias</strong>
+            <span>Disponibilidad anticipada y cancelación gratuita hasta 24 h</span>
+          </div>
+        </div>
+        <div class="benefit">
+          <div class="benefit-icon">
+            <svg viewBox="0 0 24 24"><path d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm.5-13H11v6l5.25 3.15.75-1.23-4.5-2.67V7z"/></svg>
+          </div>
+          <div class="benefit-text">
+            <strong>Check-in exprés</strong>
+            <span>Llegada sin filas, habitación lista desde las 2 p.m.</span>
+          </div>
+        </div>
+        <div class="benefit">
+          <div class="benefit-icon">
+            <svg viewBox="0 0 24 24"><path d="M20 6h-2.18c.07-.44.18-.87.18-1.33C18 2.54 15.96.5 13.5.5c-1.48 0-2.74.81-3.5 2.02C9.24 1.31 7.98.5 6.5.5 4.04.5 2 2.54 2 4.67c0 .46.11.89.18 1.33H0v16h24V6h-4zm-6.5-3.67c.83 0 1.5.67 1.5 1.5s-.67 1.5-1.5 1.5-1.5-.67-1.5-1.5.67-1.5 1.5-1.5zM6.5 2.83c.83 0 1.5.67 1.5 1.5s-.67 1.5-1.5 1.5S5 5.16 5 4.33s.67-1.5 1.5-1.5zM22 20H2v-2h20v2zm0-5H2V8h7.08L7 10.83 8.62 12 11 8.76l1-1.36 1 1.36L15.38 12 17 10.83 14.92 8H22v7z"/></svg>
+          </div>
+          <div class="benefit-text">
+            <strong>Puntos y recompensas</strong>
+            <span>Acumula puntos en cada estadía y canjéalos por noches gratis</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="hero-footer">
+      <div class="star-rating">
+        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+      </div>
+      <p>+180 000 huéspedes satisfechos</p>
+    </div>
+  </div>
+
+  <!-- ── RIGHT: Form panel ─────────────────────────────────────────────── -->
+  <div class="form-panel">
+
+    <!-- Mobile brand (visible only on small screens) -->
+    <div class="mobile-brand">
+      <div class="brand-icon">
+        <svg viewBox="0 0 24 24" fill="white"><path d="M7 13c1.66 0 3-1.34 3-3S8.66 7 7 7s-3 1.34-3 3 1.34 3 3 3zm12-6h-8v7H3V5H1v15h2v-3h18v3h2v-9c0-2.21-1.79-4-4-4z"/></svg>
+      </div>
+      <span class="brand-name">Luxe<span>Stay</span> Hotels</span>
+    </div>
+
+    <!-- Form header -->
+    <div class="form-header">
+      <span class="step-tag">✦ Booking Engine</span>
+      <h1>Crea tu cuenta de huésped</h1>
+      <p>Regístrate gratis y comienza a reservar con tarifas exclusivas para miembros.</p>
+    </div>
+
+    <div class="divider">
+      <span>Completa tus datos</span>
+    </div>
+
+    <!-- Alert -->
+    <div id="alert-box" role="alert"></div>
+
+    <form id="registerForm" novalidate>
+
+      <!-- Nombre -->
+      <div class="form-group">
+        <label for="nombre">Nombre completo</label>
+        <div class="input-wrapper">
+          <span class="input-icon">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 12c2.7 0 4.8-2.1 4.8-4.8S14.7 2.4 12 2.4 7.2 4.5 7.2 7.2 9.3 12 12 12zm0 2.4c-3.2 0-9.6 1.6-9.6 4.8v2.4h19.2v-2.4c0-3.2-6.4-4.8-9.6-4.8z"/></svg>
+          </span>
+          <input
+            type="text"
+            id="nombre"
+            name="nombre"
+            placeholder="Ej: María García"
+            autocomplete="name"
+          />
+        </div>
+        <div class="error-messages" id="nombre-errors"></div>
+      </div>
+
+      <!-- Correo -->
+      <div class="form-group">
+        <label for="correo">Correo electrónico</label>
+        <div class="input-wrapper">
+          <span class="input-icon">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/></svg>
+          </span>
+          <input
+            type="email"
+            id="correo"
+            name="correo"
+            placeholder="tu@correo.com"
+            autocomplete="email"
+          />
+        </div>
+        <div class="error-messages" id="correo-errors"></div>
+      </div>
+
+      <!-- Contraseña -->
+      <div class="form-group">
+        <label for="contrasena">Contraseña</label>
+        <div class="input-wrapper">
+          <span class="input-icon">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/></svg>
+          </span>
+          <input
+            type="password"
+            id="contrasena"
+            name="contrasena"
+            placeholder="Mínimo 8 caracteres"
+            autocomplete="new-password"
+          />
+          <button type="button" class="toggle-password" id="togglePass" title="Mostrar/ocultar contraseña">
+            <svg id="eye-icon" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/>
+            </svg>
+          </button>
+        </div>
+        <div id="password-strength" class="password-strength" style="display:none;">
+          <div class="strength-bars">
+            <div class="bar" id="bar1"></div>
+            <div class="bar" id="bar2"></div>
+            <div class="bar" id="bar3"></div>
+            <div class="bar" id="bar4"></div>
+          </div>
+          <span class="strength-label" id="strength-label"></span>
+        </div>
+        <div class="error-messages" id="contrasena-errors"></div>
+      </div>
+
+      <button type="submit" class="btn-register" id="submitBtn">
+        Crear mi cuenta gratis
+      </button>
+
+    </form>
+
+    <p class="footer-text">
+      ¿Ya tienes una cuenta? <a href="#">Inicia sesión</a>
+    </p>
+
+    <p class="terms-text">
+      Al registrarte aceptas nuestros <a href="#">Términos de servicio</a>
+      y la <a href="#">Política de privacidad</a> de LuxeStay Hotels.
+    </p>
+
+  </div><!-- /form-panel -->
+</div><!-- /page-wrapper -->
+
+<script>
+  const form     = document.getElementById('registerForm');
+  const alertBox = document.getElementById('alert-box');
+
+  // ── Helpers ────────────────────────────────────────────────────────────
+  const errorSVG   = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>';
+  const successSVG = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14l-5-5 1.41-1.41L10 13.17l7.59-7.59L19 7l-9 9z"/></svg>';
+
+  function showError(id, messages) {
+    const input     = document.getElementById(id);
+    const container = document.getElementById(id + '-errors');
+    input.classList.remove('success');
+    input.classList.add('error');
+    container.innerHTML = messages
+      .map(m => `<div class="error-msg">${errorSVG}${m}</div>`)
+      .join('');
+  }
+
+  function clearError(id) {
+    document.getElementById(id).classList.remove('error');
+    document.getElementById(id + '-errors').innerHTML = '';
+  }
+
+  function markSuccess(id) {
+    const input = document.getElementById(id);
+    input.classList.remove('error');
+    input.classList.add('success');
+    document.getElementById(id + '-errors').innerHTML = '';
+  }
+
+  function showAlert(message, type) {
+    alertBox.className = 'show alert-' + type;
+    alertBox.innerHTML = (type === 'success' ? successSVG : errorSVG) + '<span>' + message + '</span>';
+    alertBox.style.display = 'flex';
+  }
+
+  function hideAlert() {
+    alertBox.style.display = 'none';
+    alertBox.className = '';
+  }
+
+  // ── Validations ─────────────────────────────────────────────────────────
+  function validateNombre(v) {
+    const e = [];
+    if (!v.trim())               e.push('El nombre es obligatorio.');
+    else if (v.trim().length < 3) e.push('Mínimo 3 caracteres.');
+    else if (v.trim().length > 60) e.push('Máximo 60 caracteres.');
+    else if (!/^[a-zA-ZáéíóúÁÉÍÓÚñÑüÜ\s'\-]+$/.test(v.trim()))
+      e.push('Solo letras y espacios.');
+    return e;
+  }
+
+  function validateCorreo(v) {
+    const e = [];
+    if (!v.trim()) e.push('El correo electrónico es obligatorio.');
+    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim()))
+      e.push('Ingresa un correo válido (ej: usuario@correo.com).');
+    return e;
+  }
+
+  function validateContrasena(v) {
+    const e = [];
+    if (!v)            { e.push('La contraseña es obligatoria.'); return e; }
+    if (v.length < 8)  e.push('Mínimo 8 caracteres.');
+    if (!/[A-Z]/.test(v)) e.push('Al menos una letra mayúscula.');
+    if (!/[0-9]/.test(v)) e.push('Al menos un número.');
+    return e;
+  }
+
+  // ── Strength meter ───────────────────────────────────────────────────────
+  function getStrength(v) {
+    let s = 0;
+    if (v.length >= 8)  s++;
+    if (v.length >= 12) s++;
+    if (/[A-Z]/.test(v) && /[a-z]/.test(v)) s++;
+    if (/[0-9]/.test(v)) s++;
+    if (/[^A-Za-z0-9]/.test(v)) s++;
+    if (s <= 1) return { level:1, label:'Muy débil', cls:'active-weak'   };
+    if (s === 2) return { level:2, label:'Débil',    cls:'active-fair'   };
+    if (s === 3) return { level:3, label:'Buena',    cls:'active-good'   };
+    return               { level:4, label:'Fuerte',  cls:'active-strong' };
+  }
+
+  function updateStrength(v) {
+    const wrap = document.getElementById('password-strength');
+    if (!v) { wrap.style.display = 'none'; return; }
+    wrap.style.display = 'block';
+    const { level, label, cls } = getStrength(v);
+    for (let i = 1; i <= 4; i++) {
+      document.getElementById('bar' + i).className = 'bar' + (i <= level ? ' ' + cls : '');
+    }
+    document.getElementById('strength-label').textContent = 'Seguridad: ' + label;
+  }
+
+  // ── Toggle password ──────────────────────────────────────────────────────
+  document.getElementById('togglePass').addEventListener('click', () => {
+    const inp = document.getElementById('contrasena');
+    const ico = document.getElementById('eye-icon');
+    if (inp.type === 'password') {
+      inp.type = 'text';
+      ico.innerHTML = '<path d="M12 7c2.76 0 5 2.24 5 5 0 .65-.13 1.26-.36 1.83l2.92 2.92c1.51-1.26 2.7-2.89 3.43-4.75-1.73-4.39-6-7.5-11-7.5-1.4 0-2.74.25-3.98.7l2.16 2.16C10.74 7.13 11.35 7 12 7zM2 4.27l2.28 2.28.46.46C3.08 8.3 1.78 10.02 1 12c1.73 4.39 6 7.5 11 7.5 1.55 0 3.03-.3 4.38-.84l.42.42L19.73 22 21 20.73 3.27 3 2 4.27zM7.53 9.8l1.55 1.55c-.05.21-.08.43-.08.65 0 1.66 1.34 3 3 3 .22 0 .44-.03.65-.08l1.55 1.55c-.67.33-1.41.53-2.2.53-2.76 0-5-2.24-5-5 0-.79.2-1.53.53-2.2zm4.31-.78l3.15 3.15.02-.16c0-1.66-1.34-3-3-3l-.17.01z"/>';
+    } else {
+      inp.type = 'password';
+      ico.innerHTML = '<path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/>';
+    }
+  });
+
+  // ── Real-time validation ─────────────────────────────────────────────────
+  document.getElementById('nombre').addEventListener('blur', function () {
+    validateNombre(this.value).length ? showError('nombre', validateNombre(this.value)) : markSuccess('nombre');
+  });
+
+  document.getElementById('correo').addEventListener('blur', function () {
+    validateCorreo(this.value).length ? showError('correo', validateCorreo(this.value)) : markSuccess('correo');
+  });
+
+  document.getElementById('contrasena').addEventListener('input', function () {
+    updateStrength(this.value);
+    if (this.value) {
+      validateContrasena(this.value).length ? showError('contrasena', validateContrasena(this.value)) : markSuccess('contrasena');
+    } else {
+      clearError('contrasena');
+    }
+  });
+
+  document.getElementById('contrasena').addEventListener('blur', function () {
+    validateContrasena(this.value).length ? showError('contrasena', validateContrasena(this.value)) : markSuccess('contrasena');
+  });
+
+  ['nombre', 'correo', 'contrasena'].forEach(id => {
+    document.getElementById(id).addEventListener('focus', hideAlert);
+  });
+
+  // ── Registro en memoria (simulación de base de datos) ───────────────────
+  // Expuesto en window para que Selenium pueda inspeccionarlo si es necesario
+  window.__usuariosRegistrados = [];
+
+  function correoYaRegistrado(correo) {
+    return window.__usuariosRegistrados.some(
+      u => u.correo.toLowerCase() === correo.trim().toLowerCase()
+    );
+  }
+
+  // ── Submit ───────────────────────────────────────────────────────────────
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    hideAlert();
+
+    const nombre     = document.getElementById('nombre').value;
+    const correo     = document.getElementById('correo').value;
+    const contrasena = document.getElementById('contrasena').value;
+
+    const eN = validateNombre(nombre);
+    const eC = validateCorreo(correo);
+    const eP = validateContrasena(contrasena);
+    let valid = true;
+
+    eN.length ? (showError('nombre', eN),     valid = false) : markSuccess('nombre');
+    eC.length ? (showError('correo', eC),     valid = false) : markSuccess('correo');
+    eP.length ? (showError('contrasena', eP), valid = false) : markSuccess('contrasena');
+
+    if (!valid) {
+      showAlert('Por favor corrige los errores antes de continuar.', 'error');
+      return;
+    }
+
+    // ── Validación: correo ya registrado ─────────────────────────────────
+    if (correoYaRegistrado(correo)) {
+      showError('correo', ['Este correo ya está registrado en LuxeStay Hotels.']);
+      showAlert(
+        'El correo <strong>' + correo.trim() + '</strong> ya tiene una cuenta. ' +
+        '<a href="#" style="color:inherit;font-weight:700;text-decoration:underline;">Inicia sesión</a> ' +
+        'o usa un correo diferente.',
+        'error'
+      );
+      return;
+    }
+
+    // ── Registro exitoso ─────────────────────────────────────────────────
+    const btn = document.getElementById('submitBtn');
+    btn.disabled = true;
+    btn.textContent = 'Creando cuenta…';
+
+    setTimeout(() => {
+      // Guardar en memoria
+      window.__usuariosRegistrados.push({
+        nombre:    nombre.trim(),
+        correo:    correo.trim().toLowerCase(),
+        fechaRegistro: new Date().toISOString()
+      });
+
+      btn.disabled = false;
+      btn.textContent = 'Crear mi cuenta gratis';
+
+      showAlert(
+        '¡Bienvenido a LuxeStay, ' + nombre.trim().split(' ')[0] + '! ' +
+        'Tu cuenta ha sido creada. Revisa tu correo para confirmarla.',
+        'success'
+      );
+
+      form.reset();
+      ['nombre', 'correo', 'contrasena'].forEach(id => {
+        document.getElementById(id).classList.remove('success', 'error');
+      });
+      document.getElementById('password-strength').style.display = 'none';
+    }, 1400);
+  });
+</script>
+</body>
+</html>
