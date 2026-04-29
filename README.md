@@ -14,4 +14,4 @@
 
 3. Ejecutar comando en consola: 
 	
-	`ytest test.py -v`
+	`ytest test_registro.py -v`
